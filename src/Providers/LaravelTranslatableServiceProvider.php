@@ -2,6 +2,8 @@
 
 namespace Devsite\LaravelTranslatable\Providers;
 
+use Devsite\LaravelTranslatable\Contracts\ManagerContract;
+use Devsite\LaravelTranslatable\Manager;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelTranslatableServiceProvider extends ServiceProvider
@@ -11,6 +13,8 @@ class LaravelTranslatableServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/../../config/laravel-translatable.php', 'laravel-translatable'
         );
+
+        $this->app->bind(ManagerContract::class, Manager::class);
     }
 
     public function boot()
