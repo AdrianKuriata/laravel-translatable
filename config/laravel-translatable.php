@@ -7,7 +7,7 @@ return [
     'languages' => ['en'],
 
     /*
-     * Path to save language JSON files
+     * Path to save language generated JSON files
      */
     'language_path' => lang_path(),
 

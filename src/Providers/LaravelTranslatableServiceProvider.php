@@ -25,9 +25,17 @@ class LaravelTranslatableServiceProvider extends ServiceProvider
         // Load required migrations
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 
+        // Load required views
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'laravel-translatable');
+
         // Public required configuration file
         $this->publishes([
             __DIR__.'/../../config/laravel-translatable.php' => config_path('laravel-translatable.php'),
         ]);
+
+        // Public required files
+        $this->publishes([
+            __DIR__.'/../../public' => public_path('vendor/devsite/laravel-translatable'),
+        ], 'public-laravel-translatable');
     }
 }
