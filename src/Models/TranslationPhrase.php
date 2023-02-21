@@ -10,6 +10,10 @@ class TranslationPhrase extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'source' => 'array'
+    ];
+
     public function getConnectionName()
     {
         return config('laravel-translatable.db.connection');

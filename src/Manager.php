@@ -19,17 +19,21 @@ class Manager implements ManagerContract
         $files = $this->getFiles();
         $matches = $this->getPhrases($files);
         foreach ($matches as [$match, $source]) {
-            $phrase = TranslationPhrase::whereRaw('phrase = BINARY ?', [$match])->where('source', $source)->first();
+            $phrase = TranslationPhrase::whereRaw('phrase = BINARY ?', [$match])->first();
             if (!$phrase) {
                 $phrase = TranslationPhrase::create([
                     'phrase' => $match,
-                    'source' => $source
+                    'source' => [$source]
+                ]);
+            } else {
+                $phrase->update([
+                    'source' => array_unique(array_merge($phrase->source, [$source]))
                 ]);
             }
 
             foreach (config('laravel-translatable.languages') as $lang) {
                 $phrase->translations()->firstOrCreate([
-                    'locale' => $lang
+                    'locale' => $lang['value']
                 ], [
                     'translation' => $phrase->phrase,
                 ]);
@@ -81,9 +85,9 @@ class Manager implements ManagerContract
         $allMatches = [];
 
         foreach ($files as $file) {
-            if (preg_match_all('/' . $this->getPattern() . '/siU', $file->getContents(), $matches)) {
-                foreach ($matches[2] as $match) {
-                    $allMatches[] = [$match, Str::replaceFirst(base_path(), '', $file->getRealPath())];
+            if (preg_match_all('/' . $this->getPattern() . '/isU', $file->getContents(), $matches)) {
+                foreach ($matches[4] as $match) {
+                    $allMatches[] = [str_replace(["\r\n","\n", "\r"],'', trim($match)), Str::replaceFirst(base_path(), '', $file->getRealPath())];
                 }
             }
         }
@@ -108,15 +112,16 @@ class Manager implements ManagerContract
 
         return
             // See https://regex101.com/r/jS5fX0/4
-            '[^\w]' . // Must not start with any alphanum or _
             '(?<!->)' . // Must not start with ->
             '(' . implode('|', $functions) . ')' .// Must start with one of the functions
             "\(" .// Match opening parentheses
+            "([\r\n]?)(\s*)" . // Search, when has spaces or new line before
             "[\'\"]" .// Match " or '
             '(' .// Start a new group to match:
-            '(.*)*' .
+            '(.*)*' . // Find characters
             ')' .// Close group
             "[\'\"]" .// Closing quote
+            "([\r\n]?)" . // Ends with new line
             "[\),]"  // Close parentheses or new parameter
             ;
     }

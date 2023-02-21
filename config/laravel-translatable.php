@@ -4,7 +4,24 @@ return [
     /*
      * List of languages
      */
-    'languages' => ['en'],
+    'languages' => [
+        [
+            'label' => 'EN',
+            'value' => 'en'
+        ],
+        [
+            'label' => 'PL',
+            'value' => 'pl'
+        ],
+        [
+            'label' => 'ES',
+            'value' => 'es'
+        ],
+        [
+            'label' => 'DE',
+            'value' => 'de'
+        ]
+    ],
 
     /*
      * Path to save language generated JSON files

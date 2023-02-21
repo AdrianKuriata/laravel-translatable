@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create(config('laravel-translatable.db.tables.phrases.table'), function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->longText('phrase');
-            $table->text('source');
+            $table->json('source');
             $table->timestamps();
         });
 

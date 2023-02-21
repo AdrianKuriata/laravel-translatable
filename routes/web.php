@@ -1,11 +1,13 @@
 <?php
 
+use Devsite\LaravelTranslatable\Http\Controllers\ScanController;
 use Devsite\LaravelTranslatable\Http\Controllers\TranslationController;
 use Devsite\LaravelTranslatable\Http\Controllers\TranslationVueController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::resource('translations', TranslationController::class);
+    Route::post('scan', ScanController::class);
 });
 
 Route::get('/', [TranslationVueController::class, 'index'])->name('index');

@@ -12,7 +12,7 @@
             ->withEntryPoints(['resources/app/scss/app.scss'])
     }}
 </head>
-<body class="bg-slate-50">
+<body class="overflow-y-hidden">
 <div id="app"></div>
 {{
         \Illuminate\Support\Facades\Vite::useHotFile(base_path('packages/devsite/laravel-translatable/public/hot'))
