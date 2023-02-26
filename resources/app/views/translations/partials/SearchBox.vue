@@ -14,13 +14,19 @@ import {useStore} from "vuex";
 import {computed} from 'vue';
 import _debounce from 'lodash/debounce'
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {VTextField} from 'vuetify/components/VTextField'
 
 export default {
     name: 'SearchBox',
-    components: {FontAwesomeIcon, VTextField},
-    setup() {
+    components: {FontAwesomeIcon},
+    props: {
+        isDeleted: {
+            type: Boolean,
+            default: () => false
+        }
+    },
+    setup(props) {
         const store = useStore()
+        const type = props.isDeleted ? 'deletedTranslations' : 'translations'
 
         /**
          * COMPUTED
@@ -34,14 +40,14 @@ export default {
             }
         })
         const hintSearchText = computed(() => term.value.length < 3 ? `Put minimum ${3 - term.value.length} chars` : '')
-        const isSearching = computed(() => store.state.translations.searching)
+        const isSearching = computed(() => store.state[type].searching)
 
         /**
          * METHODS
          */
         const inputSearch = _debounce((value) => {
             if (value.length >= 3 || value.length === 0) {
-                store.dispatch('translations/getOptions')
+                store.dispatch(`${type}/getOptions`)
             }
         }, 500)
 

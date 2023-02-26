@@ -4,10 +4,8 @@
 
 <script>
 import {inject, onMounted, ref} from "vue";
-import {VAlert} from 'vuetify/components/VAlert'
 
 export default {
-    components: {VAlert},
     setup() {
         const show = ref(false)
         const type = ref('success')

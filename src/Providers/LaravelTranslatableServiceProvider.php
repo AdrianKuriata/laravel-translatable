@@ -3,7 +3,11 @@
 namespace Devsite\LaravelTranslatable\Providers;
 
 use Devsite\LaravelTranslatable\Contracts\ManagerContract;
+use Devsite\LaravelTranslatable\Contracts\Services\DeletedTranslationServiceContract;
+use Devsite\LaravelTranslatable\Contracts\Services\TranslationServiceContract;
 use Devsite\LaravelTranslatable\Manager;
+use Devsite\LaravelTranslatable\Services\DeletedTranslationService;
+use Devsite\LaravelTranslatable\Services\TranslationService;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelTranslatableServiceProvider extends ServiceProvider
@@ -15,6 +19,8 @@ class LaravelTranslatableServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(ManagerContract::class, Manager::class);
+        $this->app->bind(TranslationServiceContract::class, TranslationService::class);
+        $this->app->bind(DeletedTranslationServiceContract::class, DeletedTranslationService::class);
     }
 
     public function boot()

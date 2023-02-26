@@ -16,8 +16,11 @@ app.provide('$eventEmit', ($name, $data) => {
 app.provide('$eventListen', ($name, $callback) => {
     document.addEventListener($name, $callback)
 })
+
 app.use(router)
 app.use(store)
 app.use(vuetify)
 
 app.mount('#app')
+
+

@@ -19,7 +19,7 @@ class Manager implements ManagerContract
         $files = $this->getFiles();
         $matches = $this->getPhrases($files);
         foreach ($matches as [$match, $source]) {
-            $phrase = TranslationPhrase::whereRaw('phrase = BINARY ?', [$match])->first();
+            $phrase = TranslationPhrase::withTrashed()->whereRaw('phrase = BINARY ?', [$match])->first();
             if (!$phrase) {
                 $phrase = TranslationPhrase::create([
                     'phrase' => $match,
@@ -41,6 +41,9 @@ class Manager implements ManagerContract
         }
     }
 
+    /**
+     * @return void
+     */
     public function generate(): void
     {
         foreach (config('laravel-translatable.languages') as $lang) {
@@ -49,13 +52,15 @@ class Manager implements ManagerContract
                     config('laravel-translatable.db.tables.phrases.table'),
                     config('laravel-translatable.db.tables.phrases.table') . '.id',
                     config('laravel-translatable.db.tables.translations.table') . '.' . config('laravel-translatable.db.tables.translations.foreign_key_to_phrases')
-                )->where('locale', $lang)->get([
-                    'phrase' => config('laravel-translatable.db.tables.phrases.table') . '.phrase',
-                    'translation' => config('laravel-translatable.db.tables.translations.table') . '.translation'
-                ])->pluck('translation', 'phrase'),
+                )->where('locale', $lang['value'])
+                    ->whereNull(config('laravel-translatable.db.tables.phrases.table') . '.deleted_at')
+                    ->get([
+                        'phrase' => config('laravel-translatable.db.tables.phrases.table') . '.phrase',
+                        'translation' => config('laravel-translatable.db.tables.translations.table') . '.translation'
+                    ])->pluck('translation', 'phrase'),
                 JSON_PRETTY_PRINT
             );
-            app(Filesystem::class)->put($this->getSaveLangPath($lang), $json);
+            app(Filesystem::class)->put($this->getSaveLangPath($lang['value']), $json);
         }
     }
 
@@ -126,6 +131,11 @@ class Manager implements ManagerContract
             ;
     }
 
+    /**
+     * @param string $lang
+     *
+     * @return string
+     */
     protected function getSaveLangPath(string $lang): string
     {
         return sprintf('%s/%s', config('laravel-translatable.language_path'), $lang . '.json');

@@ -1,9 +1,12 @@
 import axios from "@plugins/axios";
+import route from '@plugins/route'
 
 const state = {
     options: [],
     meta: {},
     searching: false,
+    generating: false,
+    scanning: false,
     currentPage: 1
 }
 
@@ -19,6 +22,12 @@ const mutations = {
     setSearching(state, payload) {
         state.searching = payload
     },
+    setGenerating(state, payload) {
+        state.generating = payload
+    },
+    setScanning(state, payload) {
+        state.scanning = payload
+    },
     setCurrentPage(state, payload) {
         state.currentPage = payload
     }
@@ -27,7 +36,7 @@ const mutations = {
 const actions = {
     getOptions({commit, state, rootState}) {
         commit('setSearching', true)
-        axios.get('/api/translations', {
+        axios.get(route('translations.index'), {
             params: {
                 search: rootState.languageSearcher.search,
                 page: state.currentPage
@@ -37,9 +46,39 @@ const actions = {
             commit('setMeta', response.data.meta)
         }).finally(() => commit('setSearching', false))
     },
-    delete({commit, state}, translationId) {
-        axios.post(`/api/translations/${translationId}`, {
+    save({commit, dispatch, rootState}) {
+        axios.post(route('translations.update', rootState.editTranslation.translation.id), {
+            _method: 'PATCH',
+            ...rootState.editTranslation.translation
+        }).then((response) => {
+            commit('editTranslation/setShowEdit', false, {root: true})
+            setTimeout(() => commit('editTranslation/setEditTranslation', null, {root: true}), 500)
+            dispatch('getOptions')
+        })
+    },
+    delete({commit, state, dispatch}, translationId) {
+        axios.post(route('translations.destroy', translationId), {
             _method: 'DELETE'
+        }).finally(() => {
+            dispatch('getOptions')
+        })
+    },
+    restore({commit, dispatch}, translationId) {
+        commit('deletedTranslations/setScanning', true, {root: true})
+        axios.post(route('translations.restore', translationId)).finally(() => {
+            commit('deletedTranslations/setScanning', false, {root: true})
+            dispatch('deletedTranslations/getOptions', null, {root: true})
+        })
+    },
+    generate({commit}) {
+        commit('setGenerating', true)
+        axios.post(route('generate')).finally(() => commit('setGenerating', false))
+    },
+    scan({commit, dispatch}) {
+        commit('setScanning', true)
+        axios.post(route('scan')).finally(() => {
+            commit('setScanning', false)
+            dispatch('getOptions')
         })
     }
 }

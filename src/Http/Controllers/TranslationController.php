@@ -2,27 +2,37 @@
 
 namespace Devsite\LaravelTranslatable\Http\Controllers;
 
-use Devsite\LaravelTranslatable\Models\TranslationPhrase;
-use Devsite\LaravelTranslatable\Resources\TranslationResource;
+use Devsite\LaravelTranslatable\Contracts\Services\TranslationServiceContract;
+use Devsite\LaravelTranslatable\Http\Requests\TranslationRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class TranslationController extends Controller
 {
+    public function __construct(protected TranslationServiceContract $service)
+    {
+    }
+
     public function index(Request $request): AnonymousResourceCollection
     {
-        return TranslationResource::collection(
-            TranslationPhrase::with('translations')
-                ->when($request->search, fn ($query) => $query->where('phrase', 'LIKE', '%' . $request->search . '%'))
-                ->paginate(10)
-        );
+        return $this->service->index($request->search);
+    }
+
+    public function update(TranslationRequest $request, int $translationId): JsonResponse
+    {
+        $this->service->update($request->validated(), $translationId);
+        return response()->json([
+            'message' => 'Translation has been updated successfully.',
+            'type' => 'success'
+        ]);
     }
 
     public function destroy(Request $request, int $translationId): JsonResponse
     {
+        $this->service->delete($translationId);
         return response()->json([
-            'message' => 'Translation was delete successfully.',
+            'message' => 'Translation has been deleted successfully.',
             'type' => 'success'
         ]);
     }

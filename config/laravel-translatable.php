@@ -2,7 +2,7 @@
 
 return [
     /*
-     * List of languages
+     * List of languages which should be translated
      */
     'languages' => [
         [
@@ -21,6 +21,16 @@ return [
             'label' => 'DE',
             'value' => 'de'
         ]
+    ],
+
+    /*
+     * Configuring lists of data
+     */
+    'lists' => [
+        /*
+         * Items per page, default is always 10
+         */
+        'paginate' => 10
     ],
 
     /*
@@ -60,6 +70,32 @@ return [
                 'table' => 'translations',
                 'foreign_key_to_phrases' => 'translation_phrase_id',
                 'mass_assignment' => ['locale', 'translation']
+            ]
+        ]
+    ],
+
+    /*
+     * Routes configuration
+     */
+    'routes' => [
+        'prefix' => 'api',
+        'as' => 'api.',
+        'links' => [
+            'translations' => [
+                'url' => 'translations',
+                'controller' => \Devsite\LaravelTranslatable\Http\Controllers\TranslationController::class
+            ],
+            'deleted_translations' => [
+                'url' => 'deleted_translations',
+                'controller' => \Devsite\LaravelTranslatable\Http\Controllers\DeletedTranslationController::class
+            ],
+            'scan' => [
+                'url' => 'scan',
+                'controller' => \Devsite\LaravelTranslatable\Http\Controllers\ScanController::class
+            ],
+            'generate' => [
+                'url' => 'generate',
+                'controller' => \Devsite\LaravelTranslatable\Http\Controllers\GenerateController::class
             ]
         ]
     ]

@@ -23,7 +23,7 @@ class TranslationResource extends JsonResource
                 'translation' => $translation->translation,
                 'locale' => $translation->locale,
                 'locale_name' => $locale['label'] ?? '-',
-                'is_translated' => $this->phrase !== $translation->translation
+                'is_translated' => $translation->locale === config('app.locale') && $this->phrase === $translation->translation || $this->phrase !== $translation->translation
             ];
         });
         return [

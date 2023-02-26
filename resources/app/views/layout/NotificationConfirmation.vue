@@ -14,11 +14,8 @@
 
 <script>
 import {onMounted, ref, inject} from "vue";
-import {VAlert} from 'vuetify/components/VAlert'
-import {VBtn} from 'vuetify/components/VBtn'
 
 export default {
-    components: {VAlert, VBtn},
     setup() {
         const show = ref(false)
         const type = ref('error')

@@ -1,66 +1,108 @@
 {
-  "VAlert.css": {
-    "file": "assets/VAlert-29c9b2da.css",
-    "src": "VAlert.css"
+  "VTable.css": {
+    "file": "assets/VTable-df03d318.css",
+    "src": "VTable.css"
   },
-  "_VAlert-0e340c2e.js": {
+  "VTooltip.css": {
+    "file": "assets/VTooltip-be391c98.css",
+    "src": "VTooltip.css"
+  },
+  "_VTable-2a9a62de.js": {
     "css": [
-      "assets/VAlert-29c9b2da.css"
+      "assets/VTable-df03d318.css"
     ],
-    "file": "assets/VAlert-0e340c2e.js",
+    "file": "assets/VTable-2a9a62de.js",
+    "imports": [
+      "resources/app/app.js",
+      "_forwardRefs-8f97ebd9.js"
+    ]
+  },
+  "_VTooltip-67ba8513.js": {
+    "css": [
+      "assets/VTooltip-be391c98.css"
+    ],
+    "file": "assets/VTooltip-67ba8513.js",
+    "imports": [
+      "resources/app/app.js",
+      "_forwardRefs-8f97ebd9.js"
+    ]
+  },
+  "_forwardRefs-8f97ebd9.js": {
+    "css": [
+      "assets/forwardRefs-23600e70.css"
+    ],
+    "file": "assets/forwardRefs-8f97ebd9.js",
     "imports": [
       "resources/app/app.js"
     ]
   },
+  "forwardRefs.css": {
+    "file": "assets/forwardRefs-23600e70.css",
+    "src": "forwardRefs.css"
+  },
   "resources/app/app.css": {
-    "file": "assets/app-b7bf83cd.css",
+    "file": "assets/app-3a0c280f.css",
     "src": "resources/app/app.css"
   },
   "resources/app/app.js": {
     "css": [
-      "assets/app-b7bf83cd.css"
+      "assets/app-3a0c280f.css"
     ],
     "dynamicImports": [
       "resources/app/views/layout/Layout.vue",
-      "resources/app/views/translations/Index.vue"
+      "resources/app/views/translations/Index.vue",
+      "resources/app/views/deleted_translations/Index.vue"
     ],
-    "file": "assets/app-2de3379f.js",
+    "file": "assets/app-e1368a0c.js",
     "isEntry": true,
     "src": "resources/app/app.js"
   },
   "resources/app/scss/app.scss": {
-    "file": "assets/app-eff73cfb.css",
+    "file": "assets/app-33bf0f14.css",
     "isEntry": true,
     "src": "resources/app/scss/app.scss"
   },
+  "resources/app/views/deleted_translations/Index.vue": {
+    "file": "assets/Index-a6730ed6.js",
+    "imports": [
+      "_VTable-2a9a62de.js",
+      "resources/app/app.js",
+      "_forwardRefs-8f97ebd9.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/app/views/deleted_translations/Index.vue"
+  },
   "resources/app/views/layout/Layout.css": {
-    "file": "assets/Layout-a1901c9a.css",
+    "file": "assets/Layout-2fe82813.css",
     "src": "resources/app/views/layout/Layout.css"
   },
   "resources/app/views/layout/Layout.vue": {
     "css": [
-      "assets/Layout-a1901c9a.css"
+      "assets/Layout-2fe82813.css"
     ],
-    "file": "assets/Layout-788be33e.js",
+    "file": "assets/Layout-b3be0da1.js",
     "imports": [
+      "_forwardRefs-8f97ebd9.js",
       "resources/app/app.js",
-      "_VAlert-0e340c2e.js"
+      "_VTooltip-67ba8513.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/app/views/layout/Layout.vue"
   },
   "resources/app/views/translations/Index.css": {
-    "file": "assets/Index-15107366.css",
+    "file": "assets/Index-a7b05163.css",
     "src": "resources/app/views/translations/Index.css"
   },
   "resources/app/views/translations/Index.vue": {
     "css": [
-      "assets/Index-15107366.css"
+      "assets/Index-a7b05163.css"
     ],
-    "file": "assets/Index-9e5a9611.js",
+    "file": "assets/Index-a62331e1.js",
     "imports": [
+      "_VTable-2a9a62de.js",
       "resources/app/app.js",
-      "_VAlert-0e340c2e.js"
+      "_forwardRefs-8f97ebd9.js",
+      "_VTooltip-67ba8513.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/app/views/translations/Index.vue"

@@ -33,11 +33,11 @@
                         </div>
                     </th>
                     <th class="text-right">
-                        {{meta.from}} - {{meta.to}} of {{meta.total}} ({{meta.current_page}})
+                        <span v-if="meta.from">{{meta.from}} - {{meta.to}} of {{meta.total}} ({{meta.current_page}})</span>
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody v-if="translations.length > 0">
                 <tr v-for="translation in translations" :key="`translation_row_${translation.id}`" class="transition hover:bg-zinc-100">
                     <td v-html="colorizedVariables(translation.phrase)"></td>
                     <td class="text-center">
@@ -80,12 +80,12 @@
                         <v-menu>
                             <template #activator="{ props }">
                                 <v-btn v-bind="props" size="small" rounded="pill">
-                                    Show
+                                    Show ({{translation.source.length}})
                                 </v-btn>
                             </template>
 
                             <v-list>
-                                <v-list-item v-for="(source) in translation.source" :key="`language_${language}_${translation.id}`">
+                                <v-list-item v-for="(source, indexSource) in translation.source" :key="`language_${indexSource}_${translation.id}`">
                                     <v-list-item-title>
                                         {{source}}
                                     </v-list-item-title>
@@ -102,6 +102,11 @@
                         </v-btn>
                     </td>
                 </tr>
+            </tbody>
+            <tbody v-else>
+            <tr>
+                <td colspan="4" class="text-center">Translations not found.</td>
+            </tr>
             </tbody>
         </v-table>
 
@@ -132,75 +137,33 @@
 
     <notification-confirmation @success="deleteItem"></notification-confirmation>
 
-    <v-dialog
-        v-model="showEdit"
-        persistent
-        width="900"
-    >
-        <v-card>
-            <v-card-title class="text-h5 border-b">
-                <div class="flex justify-between items-center">
-                    <div>
-                        Edit translation
-                    </div>
-                    <div>
-                        <font-awesome-icon icon="fa-times" class="cursor-pointer" @click="showEdit = false"></font-awesome-icon>
-                    </div>
-                </div>
-            </v-card-title>
-            <v-card-text>
-                <div v-for="(tr, index) in translationToEdit.translations" :class="{ 'mt-2': index > 0 }">
-                    <v-textarea v-model="tr.translation" auto-grow counter rows="3" :label="`Translation in ${tr.locale_name}`"></v-textarea>
-                </div>
-            </v-card-text>
-            <v-card-actions class="border-t flex justify-end items-center">
-                <v-btn
-                    color="green-darken-1"
-                    variant="text"
-                    @click="showEdit = false"
-                >
-                    Disagree
-                </v-btn>
-                <v-btn
-                    color="green-darken-1"
-                    variant="text"
-                    @click="showEdit = false"
-                >
-                    Agree
-                </v-btn>
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
+    <edit-dialog></edit-dialog>
 </template>
 <script>
 import SearchBox from "@app/views/translations/partials/SearchBox.vue";
-import {onMounted, computed, ref, inject} from "vue";
+import {onMounted, computed, inject} from "vue";
 import {useStore} from "vuex";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {VTooltip} from "vuetify/components/VTooltip"
-import {VTable} from "vuetify/components/VTable"
-import {VMenu} from "vuetify/components/VMenu"
-import {VBtn} from "vuetify/components/VBtn"
-import {VPagination} from "vuetify/components/VPagination"
-import {VList, VListItem, VListItemTitle} from "vuetify/components/VList"
-import {VDialog} from "vuetify/components/VDialog"
-import {VCard, VCardTitle, VCardText, VCardActions} from "vuetify/components/VCard"
-import {VTextarea} from "vuetify/components/VTextarea"
 import NotificationConfirmation from "@app/views/layout/NotificationConfirmation.vue";
+import EditDialog from "@app/views/translations/partials/EditDialog.vue";
+import {colorizedVariables} from "@app/utilities/utils";
 
 export default {
     name: 'Index',
     components: {
+        EditDialog,
         NotificationConfirmation,
-        FontAwesomeIcon, SearchBox, VTooltip, VTable, VMenu, VList, VListItem, VListItemTitle, VBtn, VPagination, VDialog, VCard, VCardTitle, VCardText, VCardActions, VTextarea},
+        FontAwesomeIcon, SearchBox
+    },
     setup() {
         const store = useStore()
         const $eventEmit = inject('$eventEmit')
-        const showTooltip = ref({})
+
+        /**
+         * COMPUTED
+         */
         const translations = computed(() => store.state.translations.options)
         const paginationLength = computed(() => store.state.translations.meta.last_page)
-        const showEdit = ref(false)
-        const translationToEdit = ref({})
         const currentPage = computed({
             get() {
                 return store.state.translations.meta.current_page
@@ -212,38 +175,18 @@ export default {
         })
         const lastPage = computed(() => store.state.translations.meta.last_page)
         const meta = computed(() => store.state.translations.meta)
+
         onMounted(async() => {
+            store.commit('languageSearcher/setSearch', '')
             await store.dispatch('translations/getOptions')
         })
 
-        const colorizedVariables = (phrase) => {
-            const regex = /:\S\w+/gm;
-            let m;
-            const matches = []
-
-            while ((m = regex.exec(phrase)) !== null) {
-                // This is necessary to avoid infinite loops with zero-width matches
-                if (m.index === regex.lastIndex) {
-                    regex.lastIndex++;
-                }
-
-                // The result can be accessed through the `m`-variable.
-                m.forEach((mm, groupIndex) => {
-                    matches.push(mm)
-                });
-            }
-
-            if (matches.length > 0) {
-                matches.forEach((match) => {
-                    phrase = phrase.replaceAll(match, `<span class="text-green-500">${match}</span>`)
-                })
-            }
-
-            return phrase
-        }
+        /**
+         * METHODS
+         */
         const askDeleteItem = (translationId) => {
             $eventEmit('notify-confirmation', {
-                message: 'Are you sure you want to delete this item? This action is undoable.',
+                message: 'Are you sure you want to delete this item? These will be available in Deleted translations section.',
                 type: 'warning',
                 data: translationId
             })
@@ -253,21 +196,18 @@ export default {
         }
 
         const askEditItem = ($translation) => {
-            showEdit.value = true
-            translationToEdit.value = $translation
+            store.commit('editTranslation/setEditTranslation', $translation)
+            store.commit('editTranslation/setShowEdit', true)
         }
 
         return {
             translations,
-            showTooltip,
             colorizedVariables,
             paginationLength,
             currentPage,
             lastPage,
             meta,
             askEditItem,
-            showEdit,
-            translationToEdit,
             askDeleteItem,
             deleteItem
         }

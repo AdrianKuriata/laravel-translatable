@@ -3,12 +3,18 @@ import {createRouter, createWebHashHistory} from 'vue-router'
 const routes = [
     {
         path: '/translations',
-        component: () => import('./views/layout/Layout.vue'),
+        component: () => import('@app/views/layout/Layout.vue'),
         redirect: '/translations',
         children: [
             {
                 path: '/',
-                component: () => import('./views/translations/Index.vue')
+                name: 'translations.index',
+                component: () => import('@app/views/translations/Index.vue')
+            },
+            {
+                path: '/deleted_translations',
+                name: 'deleted_translations.index',
+                component: () => import('@app/views/deleted_translations/Index.vue')
             },
         ]
     }
@@ -17,6 +23,7 @@ const routes = [
 const router = createRouter({
     history: createWebHashHistory(),
     routes,
+    linkActiveClass: 'text-blue-800 font-bold'
 })
 
 export default router

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->longText('phrase');
             $table->json('source');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create(config('laravel-translatable.db.tables.translations.table'), function (Blueprint $table) {
