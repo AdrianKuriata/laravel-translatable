@@ -1,3 +1,35 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
-import {faSpinner, faCircleInfo, faPencil, faTrash, faSearch, faCirclePlay, faChevronUp, faChevronDown, faCheck, faTimes, faChevronLeft, faChevronRight, faFileLines} from '@fortawesome/free-solid-svg-icons'
-library.add(faSpinner, faCircleInfo, faPencil, faTrash, faSearch, faCirclePlay, faChevronUp, faChevronDown, faCheck, faTimes, faChevronLeft, faChevronRight, faFileLines)
+import {
+    faSpinner,
+    faCircleInfo,
+    faPencil,
+    faTrash,
+    faSearch,
+    faCirclePlay,
+    faChevronUp,
+    faChevronDown,
+    faCheck,
+    faTimes,
+    faChevronLeft,
+    faChevronRight,
+    faFileLines,
+    faForwardFast,
+    faBackwardFast
+} from '@fortawesome/free-solid-svg-icons'
+library.add(
+    faSpinner,
+    faCircleInfo,
+    faPencil,
+    faTrash,
+    faSearch,
+    faCirclePlay,
+    faChevronUp,
+    faChevronDown,
+    faCheck,
+    faTimes,
+    faChevronLeft,
+    faChevronRight,
+    faFileLines,
+    faForwardFast,
+    faBackwardFast
+)

@@ -2,6 +2,7 @@
 
 namespace Devsite\LaravelTranslatable\Providers;
 
+use Devsite\LaravelTranslatable\Console\Commands\InstallLaravelTranslatableCommand;
 use Devsite\LaravelTranslatable\Contracts\ManagerContract;
 use Devsite\LaravelTranslatable\Contracts\Services\DeletedTranslationServiceContract;
 use Devsite\LaravelTranslatable\Contracts\Services\TranslationServiceContract;
@@ -37,11 +38,18 @@ class LaravelTranslatableServiceProvider extends ServiceProvider
         // Public required configuration file
         $this->publishes([
             __DIR__.'/../../config/laravel-translatable.php' => config_path('laravel-translatable.php'),
-        ]);
+        ], 'config-laravel-translatable');
 
         // Public required files
         $this->publishes([
             __DIR__.'/../../public' => public_path('vendor/devsite/laravel-translatable'),
         ], 'public-laravel-translatable');
+
+        // Publish commands
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                InstallLaravelTranslatableCommand::class
+            ]);
+        }
     }
 }

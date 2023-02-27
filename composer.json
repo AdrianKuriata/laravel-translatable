@@ -20,11 +20,25 @@
             "Devsite\\LaravelTranslatable\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Devsite\\LaravelTranslatable\\Tests\\": "tests/"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [
                 "Devsite\\LaravelTranslatable\\Providers\\LaravelTranslatableServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php vendor/bin/testbench package:discover --ansi"
+        ]
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.22",
+        "phpunit/phpunit": "^10.0.9"
     }
 }

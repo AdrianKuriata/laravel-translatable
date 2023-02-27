@@ -7,31 +7,31 @@
     "file": "assets/VTooltip-be391c98.css",
     "src": "VTooltip.css"
   },
-  "_VTable-2a9a62de.js": {
+  "_VTable-e5ebc0cb.js": {
     "css": [
       "assets/VTable-df03d318.css"
     ],
-    "file": "assets/VTable-2a9a62de.js",
+    "file": "assets/VTable-e5ebc0cb.js",
     "imports": [
       "resources/app/app.js",
-      "_forwardRefs-8f97ebd9.js"
+      "_forwardRefs-f7189e1d.js"
     ]
   },
-  "_VTooltip-67ba8513.js": {
+  "_VTooltip-18e8e58b.js": {
     "css": [
       "assets/VTooltip-be391c98.css"
     ],
-    "file": "assets/VTooltip-67ba8513.js",
+    "file": "assets/VTooltip-18e8e58b.js",
     "imports": [
       "resources/app/app.js",
-      "_forwardRefs-8f97ebd9.js"
+      "_forwardRefs-f7189e1d.js"
     ]
   },
-  "_forwardRefs-8f97ebd9.js": {
+  "_forwardRefs-f7189e1d.js": {
     "css": [
       "assets/forwardRefs-23600e70.css"
     ],
-    "file": "assets/forwardRefs-8f97ebd9.js",
+    "file": "assets/forwardRefs-f7189e1d.js",
     "imports": [
       "resources/app/app.js"
     ]
@@ -53,7 +53,7 @@
       "resources/app/views/translations/Index.vue",
       "resources/app/views/deleted_translations/Index.vue"
     ],
-    "file": "assets/app-e1368a0c.js",
+    "file": "assets/app-863aaf36.js",
     "isEntry": true,
     "src": "resources/app/app.js"
   },
@@ -63,11 +63,11 @@
     "src": "resources/app/scss/app.scss"
   },
   "resources/app/views/deleted_translations/Index.vue": {
-    "file": "assets/Index-a6730ed6.js",
+    "file": "assets/Index-94b70edc.js",
     "imports": [
-      "_VTable-2a9a62de.js",
+      "_VTable-e5ebc0cb.js",
       "resources/app/app.js",
-      "_forwardRefs-8f97ebd9.js"
+      "_forwardRefs-f7189e1d.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/app/views/deleted_translations/Index.vue"
@@ -80,11 +80,11 @@
     "css": [
       "assets/Layout-2fe82813.css"
     ],
-    "file": "assets/Layout-b3be0da1.js",
+    "file": "assets/Layout-1974a61b.js",
     "imports": [
-      "_forwardRefs-8f97ebd9.js",
+      "_forwardRefs-f7189e1d.js",
       "resources/app/app.js",
-      "_VTooltip-67ba8513.js"
+      "_VTooltip-18e8e58b.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/app/views/layout/Layout.vue"
@@ -97,12 +97,12 @@
     "css": [
       "assets/Index-a7b05163.css"
     ],
-    "file": "assets/Index-a62331e1.js",
+    "file": "assets/Index-15b10309.js",
     "imports": [
-      "_VTable-2a9a62de.js",
+      "_VTable-e5ebc0cb.js",
       "resources/app/app.js",
-      "_forwardRefs-8f97ebd9.js",
-      "_VTooltip-67ba8513.js"
+      "_forwardRefs-f7189e1d.js",
+      "_VTooltip-18e8e58b.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/app/views/translations/Index.vue"

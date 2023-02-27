@@ -30,29 +30,7 @@
             </tbody>
         </v-table>
 
-        <v-pagination v-model="currentPage" show-first-last-page :length="paginationLength" :total-visible="5" rounded="circle">
-            <template #prev>
-                <v-btn icon @click="currentPage === 1 ? currentPage : currentPage--" :disabled="currentPage === 1">
-                    <font-awesome-icon icon="fa-chevron-left"></font-awesome-icon>
-                </v-btn>
-                <span></span>
-            </template>
-            <template #next>
-                <v-btn icon @click="currentPage === lastPage ? lastPage : currentPage++" :disabled="currentPage === lastPage">
-                    <font-awesome-icon icon="fa-chevron-right"></font-awesome-icon>
-                </v-btn>
-            </template>
-            <template #first>
-                <v-btn @click="currentPage = 1" :disabled="currentPage === 1">
-                    Start
-                </v-btn>
-            </template>
-            <template #last>
-                <v-btn @click="currentPage = lastPage" :disabled="currentPage === lastPage">
-                    End
-                </v-btn>
-            </template>
-        </v-pagination>
+        <pagination :page="currentPage" :last-page="lastPage" :pagination-length="paginationLength" @page="currentPage = $event"></pagination>
     </div>
 
     <notification-confirmation @success="restoreItem"></notification-confirmation>
@@ -64,11 +42,12 @@ import {useStore} from "vuex";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import NotificationConfirmation from "@app/views/layout/NotificationConfirmation.vue";
 import {colorizedVariables} from "@app/utilities/utils";
+import Pagination from "@app/views/layout/Pagination.vue";
 
 export default {
     name: 'Index',
     components: {
-        NotificationConfirmation, FontAwesomeIcon, SearchBox
+        Pagination, NotificationConfirmation, FontAwesomeIcon, SearchBox
     },
     setup() {
         const store = useStore()
