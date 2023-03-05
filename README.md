@@ -1,6 +1,8 @@
 # Laravel Translatable
 Package for simple manage translations in your app. You can scan for searching new translations or generate translation files. You can delete translations, which should be excluded from generated files.
 
+![Laravel Translatable panel](https://i.imgur.com/Kok1kF1.png "Laravel Translatable panel")
+
 ---
 
 # Installation
