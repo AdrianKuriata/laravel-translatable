@@ -25,11 +25,11 @@ class TestCase extends BaseTestCase
     protected function defineEnvironment($app)
     {
         // Setup default database to use sqlite :memory:
-        $app['config']->set('database.default', 'tests');
         $app['config']->set('database.connections.tests', [
-            'driver'   => 'mysql',
+            'driver'   => 'sqlite',
             'database' => ':memory:',
             'prefix'   => '',
         ]);
+        $app['config']->set('database.default', 'tests');
     }
 }
