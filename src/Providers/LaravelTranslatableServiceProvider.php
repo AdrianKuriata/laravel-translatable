@@ -2,7 +2,9 @@
 
 namespace Devsite\LaravelTranslatable\Providers;
 
+use Devsite\LaravelTranslatable\Console\Commands\GenerateLaravelTranslatableCommand;
 use Devsite\LaravelTranslatable\Console\Commands\InstallLaravelTranslatableCommand;
+use Devsite\LaravelTranslatable\Console\Commands\ScanLaravelTranslatableCommand;
 use Devsite\LaravelTranslatable\Contracts\ManagerContract;
 use Devsite\LaravelTranslatable\Contracts\Services\DeletedTranslationServiceContract;
 use Devsite\LaravelTranslatable\Contracts\Services\TranslationServiceContract;
@@ -48,7 +50,9 @@ class LaravelTranslatableServiceProvider extends ServiceProvider
         // Publish commands
         if ($this->app->runningInConsole()) {
             $this->commands([
-                InstallLaravelTranslatableCommand::class
+                InstallLaravelTranslatableCommand::class,
+                ScanLaravelTranslatableCommand::class,
+                GenerateLaravelTranslatableCommand::class
             ]);
         }
     }

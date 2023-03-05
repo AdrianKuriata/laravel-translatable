@@ -4,9 +4,9 @@ Package for simple manage translations in your app. You can scan for searching n
 ---
 
 # Installation
-`composer require devsite/laravel-translatable`
+In first step run `composer require devsite/laravel-translatable`
 
-In next step run `php artisan devsite:laravel-translatable:install` for install package, copy all required assets, config files etc.
+After than, in next step run `php artisan devsite:laravel-translatable:install` for install package, copy all required assets, config files etc.
 
 # Requirements
 ```json
@@ -41,6 +41,9 @@ In next step run `php artisan devsite:laravel-translatable:install` for install 
 # Config
 Check config to configure your routes, database, list information, search paths, used methods etc.
 
-# TODO'S
-2. Make a command for running scan and generate methods with possibility to put it to the queue.
-4. Make a tests.
+# Test
+For run tests for package, go to the package destination and run `vendor/bin/phpunit`.
+
+# Command
+1. For scan for new languages, run `php artisan devsite:laravel-translatable:scan`
+2. For generate language files, run `php artisan devsite:laravel-translatable:generate`
