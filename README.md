@@ -46,6 +46,9 @@ Check config to configure your routes, database, list information, search paths,
 # Test
 For run tests for package, go to the package destination and run `vendor/bin/phpunit`.
 
-# Command
+# Commands
 1. For scan for new languages, run `php artisan devsite:laravel-translatable:scan`
 2. For generate language files, run `php artisan devsite:laravel-translatable:generate`
+
+# TODO
+1. Possibility translate with DeepL and Google Translator
