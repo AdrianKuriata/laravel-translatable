@@ -21,7 +21,7 @@ class TranslateController extends Controller
             foreach ($toTranslate as $translation) {
                 $items[] = [
                     'locale' => $translation['locale'],
-                    'translation' => $this->translator->dropIgnoreTags(
+                    'translation' => $this->translator->fixVariables(
                         $this->translator->translate(
                             $translation['translation'], config('app.locale'), $translation['locale']
                         ),

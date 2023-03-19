@@ -14,5 +14,5 @@ interface TranslatorContract
 
     public function getVariables(string $translation): array;
 
-    public function dropIgnoreTags(string $translation, array $originalListOfVariables): string;
+    public function fixVariables(string $translation, array $originalListOfVariables): string;
 }

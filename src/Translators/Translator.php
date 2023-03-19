@@ -31,7 +31,7 @@ class Translator implements TranslatorContract
         return Arr::collapse($matches);
     }
 
-    public function dropIgnoreTags(string $translation, array $originalListOfVariables): string
+    public function fixVariables(string $translation, array $originalListOfVariables): string
     {
         foreach ($this->getVariables($translation) as $key => $match) {
             $translation = str_replace($match, $originalListOfVariables[$key], $translation);
