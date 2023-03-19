@@ -8,9 +8,11 @@ use Devsite\LaravelTranslatable\Console\Commands\ScanLaravelTranslatableCommand;
 use Devsite\LaravelTranslatable\Contracts\ManagerContract;
 use Devsite\LaravelTranslatable\Contracts\Services\DeletedTranslationServiceContract;
 use Devsite\LaravelTranslatable\Contracts\Services\TranslationServiceContract;
+use Devsite\LaravelTranslatable\Contracts\TranslatorContract;
 use Devsite\LaravelTranslatable\Manager;
 use Devsite\LaravelTranslatable\Services\DeletedTranslationService;
 use Devsite\LaravelTranslatable\Services\TranslationService;
+use Devsite\LaravelTranslatable\Translators\Translator;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelTranslatableServiceProvider extends ServiceProvider
@@ -24,6 +26,12 @@ class LaravelTranslatableServiceProvider extends ServiceProvider
         $this->app->bind(ManagerContract::class, Manager::class);
         $this->app->bind(TranslationServiceContract::class, TranslationService::class);
         $this->app->bind(DeletedTranslationServiceContract::class, DeletedTranslationService::class);
+        $this->app->bind(
+            TranslatorContract::class,
+            config('laravel-translatable.translators.default') !== null
+                ? config('laravel-translatable.translators.drivers.' . config('laravel-translatable.translators.default') . '.class')
+                : Translator::class
+        );
     }
 
     public function boot()

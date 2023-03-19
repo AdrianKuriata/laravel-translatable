@@ -22,6 +22,15 @@
             </v-card-text>
             <v-card-actions class="border-t flex justify-end items-center">
                 <v-btn
+                    v-if="config.translator_on"
+                    color="green-darken-5"
+                    :loading="translating"
+                    variant="text"
+                    @click="translateWithTranslator"
+                >
+                    Translate with translator <font-awesome-icon icon="fa-language" class="cursor-pointer ml-1" @click="translateWithTranslator"></font-awesome-icon>
+                </v-btn>
+                <v-btn
                     color="red-darken-1"
                     variant="text"
                     @click="cancel"
@@ -70,6 +79,8 @@ export default {
                 store.commit('editTranslation/setShowEdit', value)
             }
         })
+        const config = computed(() => store.state.config.config)
+        const translating = computed(() => store.state.translations.translating)
 
         /**
          * METHODS
@@ -82,11 +93,18 @@ export default {
             setTimeout(() => store.commit('editTranslation/setEditTranslation', null), 500)
         }
 
+        const translateWithTranslator = () => {
+            store.dispatch('translations/translate')
+        }
+
         return {
             form,
             showEdit,
             success,
-            cancel
+            cancel,
+            config,
+            translateWithTranslator,
+            translating
         }
     }
 }

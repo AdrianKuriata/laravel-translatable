@@ -11,6 +11,12 @@ const mutations = {
     },
     setShowEdit(state, payload) {
         state.showEdit = payload
+    },
+    setTranslationForLocale(state, payload) {
+        const index = state.translation.translations.findIndex((item) => item.locale === payload.locale)
+        if (index !== -1) {
+            state.translation.translations[index].translation = payload.translation
+        }
     }
 }
 

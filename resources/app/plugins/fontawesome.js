@@ -14,7 +14,8 @@ import {
     faChevronRight,
     faFileLines,
     faForwardFast,
-    faBackwardFast
+    faBackwardFast,
+    faLanguage
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
     faSpinner,
@@ -31,5 +32,6 @@ library.add(
     faChevronRight,
     faFileLines,
     faForwardFast,
-    faBackwardFast
+    faBackwardFast,
+    faLanguage
 )
