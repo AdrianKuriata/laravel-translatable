@@ -15,6 +15,9 @@
             </v-app-bar-title>
 
             <template #append>
+                <div v-if="config.translator_on && config.driver === 'deepl'">
+                    DeepL usage: {{config.usage.character_count}}/{{config.usage.character_limit}}
+                </div>
                 <v-btn :loading="isGenerating" icon :disabled="isGenerating" @click="generate">
                     <font-awesome-icon icon="fa-file-lines"></font-awesome-icon>
                     <v-tooltip
@@ -51,6 +54,7 @@ export default {
         const store = useStore()
         const isScanning = computed(() => store.state.translations.scanning)
         const isGenerating = computed(() => store.state.translations.generating)
+        const config = computed(() => store.state.config.config)
 
         const scan = () => {
             store.dispatch('translations/scan')
@@ -64,7 +68,8 @@ export default {
             isScanning,
             scan,
             isGenerating,
-            generate
+            generate,
+            config
         }
     }
 }

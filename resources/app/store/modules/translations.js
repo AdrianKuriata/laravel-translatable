@@ -7,6 +7,7 @@ const state = {
     searching: false,
     generating: false,
     scanning: false,
+    translating: false,
     currentPage: 1
 }
 
@@ -27,6 +28,9 @@ const mutations = {
     },
     setScanning(state, payload) {
         state.scanning = payload
+    },
+    setTranslating(state, payload) {
+        state.translating = payload
     },
     setCurrentPage(state, payload) {
         state.currentPage = payload
@@ -79,6 +83,17 @@ const actions = {
         axios.post(route('scan')).finally(() => {
             commit('setScanning', false)
             dispatch('getOptions')
+        })
+    },
+    translate({commit, dispatch, rootState}) {
+        commit('setTranslating', true)
+        axios.post(route('translate'), {
+            ...rootState.editTranslation.translation
+        }).then(response => {
+            response.data.items.forEach(item => commit('editTranslation/setTranslationForLocale', {locale: item.locale, translation: item.translation}, {root: true}))
+        }).finally(() => {
+            commit('setTranslating', false)
+            dispatch('config/getConfig', null, {root: true})
         })
     }
 }

@@ -13,6 +13,8 @@ Route::group(['prefix' => config('laravel-translatable.routes.prefix'), 'as' => 
     Route::resource(config('laravel-translatable.routes.links.deleted_translations.url'), config('laravel-translatable.routes.links.deleted_translations.controller'))->only('index');
     Route::post(config('laravel-translatable.routes.links.scan.url'), config('laravel-translatable.routes.links.scan.controller'))->name('scan');
     Route::post(config('laravel-translatable.routes.links.generate.url'), config('laravel-translatable.routes.links.generate.controller'))->name('generate');
+    Route::post(config('laravel-translatable.routes.links.translate.url'), config('laravel-translatable.routes.links.translate.controller'))->name('translate');
+    Route::get(config('laravel-translatable.routes.links.config.url'), config('laravel-translatable.routes.links.config.controller'))->name('config');
 });
 
 Route::get('/laravel-translatable/routes', RoutesController::class);

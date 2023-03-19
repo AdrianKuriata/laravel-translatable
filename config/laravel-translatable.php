@@ -96,6 +96,32 @@ return [
             'generate' => [
                 'url' => 'generate',
                 'controller' => \Devsite\LaravelTranslatable\Http\Controllers\GenerateController::class
+            ],
+            'translate' => [
+                'url' => 'translate',
+                'controller' => \Devsite\LaravelTranslatable\Http\Controllers\TranslateController::class
+            ],
+            'config' => [
+                'url' => 'config',
+                'controller' => \Devsite\LaravelTranslatable\Http\Controllers\ConfigController::class
+            ]
+        ]
+    ],
+
+    /**
+     * List of translation engines for automatically translating
+     */
+    'translators' => [
+        'default' => 'deepl',
+        'drivers' => [
+            'deepl' => [
+                'version' => 'free', // free or pro
+                'auth_key' => env('DEEPL_AUTH_KEY'),
+                'class' => \Devsite\LaravelTranslatable\Translators\DeeplTranslator::class
+            ],
+            'google' => [
+                'auth_key' => env('GOOGLE_AUTH_KEY'),
+                'class' => \Devsite\LaravelTranslatable\Translators\GoogleTranslator::class
             ]
         ]
     ]
